@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!--BOOTSTRAP-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        
+
+        <!--ALERTIFY JS-->
+        <!-- JavaScript -->
+        <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+        <!-- Default theme -->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+        <!-- Semantic UI theme -->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+        <!-- Bootstrap theme -->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
+
+
+        <!--JQUERY-->
+        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> 
+
+
+        <!--FORMATO PROPIO-->
+        <link href="../assets/css/formato.css" rel="stylesheet">
+                
+        <title>Proyecto</title>
+        <link rel="shortcut icon" href="assets/img/balon.png">
+    </head>
+    <body>
+        <nav class="navbar navbar-dark bg-dark"> <!--navbar navbar-expand-md navbar-dark fixed-top bg-dark-->
+            <a href="/" class="navbar-brand">Usuario: <strong> <%= process.env.NOMBRE_USUARIO %> </strong></a>
+        </nav>
+
+        <nav class="navbar navbar-expand-lg bg-body-tertiary"> <!--navbar navbar-expand-md navbar-dark fixed-top bg-dark-->
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/inicio">Inicio</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <!--<li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/quinielaSelEvento">Quiniela</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="# ">Quiniela Total Resultados</a>
+                        </li>-->
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Quiniela
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/quinielaSelEvento">Quiniela</a></li>
+                                <li><a class="dropdown-item" href="/quinielaSelEventoTotal">Quiniela Total Resultados</a></li>
+                            </ul>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/posiciones">Tabla de Posiciones</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/selEvento">Resultados Participantes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/selEventoOficial">Resultados Oficiales</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/cambio_contrasena/<%= process.env.NOMBRE_USUARIO %>">Cambio Contraseña</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </body>
+</html>

@@ -1,0 +1,156 @@
+
+.body-login {
+    background-image: url('../img/fifa-world-cup-2026-logo2.jpg');
+    background-size: cover; 
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+    font-family: 'Numans', sans-serif;
+}
+
+.body-inicio {
+    background-image: url('../img/estadio4.jpg');
+    background-size: cover; 
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+    font-family: 'Numans', sans-serif;
+}
+
+.body-quiniela {
+    background-image: url('../img/copa-mundo-porteria2.png'); 
+    background-size: cover; 
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+    font-family: 'Numans', sans-serif;
+}
+
+.body-quiniela-total {
+    background-image: url('../img/balon-triounda.jpg'); 
+    background-size: cover; 
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+    font-family: 'Numans', sans-serif;
+}
+
+.body-posiciones {
+    background-image: url('../img/pierna-balon2.png');
+    background-size: cover; 
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+    font-family: 'Numans', sans-serif;
+}
+
+.body-resultados-participantes {
+    background-image: url('../img/mundial-2026-estadio.jpg');
+    background-size: cover;  
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+    font-family: 'Numans', sans-serif;
+}
+
+.body-resultados-oficiales {
+    background-image: url('../img/vista-balon2.jpg');
+    background-size: cover; 
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+    font-family: 'Numans', sans-serif;
+}
+
+.body-contrasena {
+    background-image: url('../img/balon-desgastado3.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+    font-family: 'Numans', sans-serif;
+}
+
+
+/*body {
+    background-image: url('../img/cancha_fut2.jpg');
+    background-size: cover;  /*contain*/ /*cover*/
+/*    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+    font-family: 'Numans', sans-serif;
+}
+
+/*hasta aqui se inhabilita*/
+.tamanoBoton { 
+    width: 100px; 
+}
+
+.tamanoBoton2 { 
+    width: 300px; 
+}
+
+.alineacionCentrada {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*min-height: 100vh; */
+}
+
+#encabezado {
+    /*border: 1px solid blue; */
+    width: 200px;
+    word-wrap: break-word;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.inputMarcador {
+    text-align: center;
+    width: 80px;
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.inputDeshabilitado {
+    /*color: #555555;*/
+    color: red; 
+    background-color: #eee; 
+    border:1px solid #ddd;
+}
+
+.textoGrupo {
+    text-align: center;
+    font-size: 30px; /*30*/
+    font-weight: bold;
+    font-style: italic;
+    
+}
+
+.textoMarcador {
+    text-align: center;
+    font-size: 50px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.textoUsuario {
+    text-align: center;
+    font-size: 17px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.tamanoImagen {
+    height: 80px;
+    max-width: 120px;
+}
+
+.tamanoLogo {
+    height: 120px;
+    max-width: 160px;
+}
