@@ -36,7 +36,7 @@
                             <option value=""> </option>
                             <% if(eventos){ 
                                 for(var i = 0; i < eventos.length; i++){ %>
-                                    <option value="<%= eventos[i].idevento %>"><%= eventos[i].nombre %></option>
+                                    <strong><option value="<%= eventos[i].idevento %>"><%= eventos[i].nombre %></option></strong>
                                 <% } %>    
                             <% } %>
                         </select>
@@ -66,7 +66,7 @@
                                         <% } %>
                                     <% } %>
                                 <% } %>        
-                                <strong><h2><%- process.env.EVENTO_SEL_NOMBRE%></h2></strong>
+                                <strong><h2 class="fw-bold"><%- process.env.EVENTO_SEL_NOMBRE%></h2></strong>
                             </center>
                         </div>
                     </div>

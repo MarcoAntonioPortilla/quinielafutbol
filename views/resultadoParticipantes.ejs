@@ -6,7 +6,7 @@
         <title>Resultados Participantes</title>
         <link rel="shortcut icon" href="assets/img/balon.png">
     </head>
-    <body class="body-resultados-participantes">
+    <body class="body-posiciones">  <!--body-posiciones-->
         <% if(process.env.TIPO_USUARIO === "admin"){ %>
             <%- include('partials/_header-admin') %>
         <%}else{%>    
@@ -21,7 +21,7 @@
 
                     </div>
                     <div class="col-md-6">
-                        <label class="mt-3 fw-bold" for="evento">Evento:</label>
+                        <label class="mt-3 text-primary fw-bold" for="evento">Evento:</label>
                         <select class="form-control col-md-12" name="evento" required>
                             <option value=""> </option>
                             <% if(eventos){ 
@@ -56,7 +56,7 @@
                                         <% } %>
                                     <% } %>
                                 <% } %>        
-                                <strong><h2><%- process.env.EVENTO_SEL_NOMBRE%></h2></strong>
+                                <strong><h2 class="text-primary fw-bold"><%- process.env.EVENTO_SEL_NOMBRE%></h2></strong>
                             </center>
                         </div>
                     </div>
@@ -86,6 +86,7 @@
                                         <th></th>
                                         <th>Goles</th>
                                         <th>Equipo</th>
+                                        <th>Puntos</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -121,6 +122,12 @@
                                                         <img class="tamanoImagen" src="../assets/img/<%= data[i].archivo2 %>" alt="logo"> 
                                                         <br>
                                                         <strong> <%= data[i].nombre2 %> </strong>
+                                                    </center>
+                                                </td>
+                                                <td class="textoPuntos text-danger" >
+                                                    <center>
+                                                        <!--Aquí va el resultado de los totales-->
+                                                            x <%= data[i].total   %>
                                                     </center>
                                                 </td>
                                             </tr>

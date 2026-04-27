@@ -6,7 +6,7 @@
         <title>Tabla de Posiciones</title>
         <link rel="shortcut icon" href="assets/img/balon.png">
     </head>
-    <body class="body-posiciones">
+    <body class="body-resultados-participantes">
         <% if(process.env.TIPO_USUARIO === "admin"){ %>
             <%- include('partials/_header-admin') %>
         <%}else{%>    
@@ -57,7 +57,7 @@
                                         <% } %>
                                     <% } %>
                                 <% } %>        
-                                <strong><h2><%- process.env.EVENTO_SEL_NOMBRE%></h2></strong>
+                                <strong><h2 class="fw-bold"><%- process.env.EVENTO_SEL_NOMBRE%></h2></strong>
                             </center>
                         </div>
                     </div>

@@ -138,6 +138,13 @@ input[type=number]::-webkit-outer-spin-button {
     font-style: italic;
 }
 
+.textoPuntos {
+    text-align: center;
+    font-size: 70px; /*30*/
+    font-weight: bold;
+    font-style: italic;
+}
+
 .textoUsuario {
     text-align: center;
     font-size: 17px;

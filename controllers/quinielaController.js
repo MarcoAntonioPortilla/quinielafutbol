@@ -10,7 +10,7 @@ const SQL_verPartidos = 'SELECT partido.*, quin.idevento AS quinevento, quin.idp
                         'FROM partido LEFT JOIN quin ON partido.idpartido = quin.idpartido AND quin.idusuario = ? AND quin.concurso = ?, ' +
                             '(SELECT idpais, nombre, archivo FROM pais) AS subConsultapais, (SELECT idpais, nombre, archivo FROM pais) AS subConsultapais2 ' +
                         'WHERE partido.fecha >= CURDATE() AND partido.equipo1 = subConsultapais.idpais AND partido.equipo2 = subConsultapais2.idpais AND partido.evento = ? ' + 
-                        'ORDER BY partido.fecha, partido.grupo';
+                        'ORDER BY partido.fecha, partido.hora, partido.grupo';
 
 
 const SQL_verPartidosTotal = 'SELECT partido.*, quin.idevento AS quinevento, quin.idpartido AS quinpartido, quin.idusuario AS quinusuario, ' +
@@ -20,7 +20,7 @@ const SQL_verPartidosTotal = 'SELECT partido.*, quin.idevento AS quinevento, qui
                              'FROM partido LEFT JOIN quin ON partido.idpartido = quin.idpartido AND quin.idusuario = ? AND quin.concurso = ?, ' +
                                 '(SELECT idpais, nombre, archivo FROM pais) AS subConsultapais, (SELECT idpais, nombre, archivo FROM pais) AS subConsultapais2 ' +
                              'WHERE partido.equipo1 = subConsultapais.idpais AND partido.equipo2 = subConsultapais2.idpais AND partido.evento = ? ' + 
-                             'ORDER BY partido.fecha, partido.grupo';                        
+                             'ORDER BY partido.fecha, partido.hora, partido.grupo';                        
 
 
 
