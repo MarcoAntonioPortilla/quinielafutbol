@@ -70,10 +70,10 @@ controller.guardarResultados = (req, res) => {
                 console.log("marcador 2: " + marcador2);
                 
                 conn.query('SELECT * FROM resultado WHERE idpartido = ?',[partidoFinal], (err, partidoEspecifico) => {
-                    if(partidoEspecifico && partidoEspecifico.length > 0){
+                    if(partidoEspecifico && partidoEspecifico.length > 0 && marcador1 && marcador2){
                         conn.query('UPDATE resultado SET equipo1 = ?, equipo2 = ? WHERE idresultado = ?',[marcador1, marcador2, partidoEspecifico[0].idresultado], (err, registroPartido) => {
                         });    
-                    }else{
+                    }else if(marcador1 && marcador2){
                         conn.query('INSERT INTO resultado(idevento, idpartido, equipo1, equipo2) VALUES (?, ?, ?, ?)',[evento, partidoFinal, marcador1, marcador2], (err, registroPartido) => {
                         });  
                     }

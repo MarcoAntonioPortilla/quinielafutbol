@@ -36,6 +36,7 @@ controller.verPosiciones = (req, res) => {
                        'if(quin.equipo1 < quin.equipo2 AND resultado.equipo1 < resultado.equipo2 , 1, 0))))) AS total ' +
                        'FROM resultado LEFT JOIN quin ON resultado.idpartido = quin.idpartido, usuario ' +
                        'WHERE resultado.idevento = ? AND usuario.idusuario = quin.idusuario AND quin.concurso = ? ' +
+                            
                        'GROUP BY usuario.idusuario ' +
                        'ORDER BY total DESC', [idevento, concurso], (err, participantes) => {
                 conn.query('SELECT * FROM evento WHERE idevento = ?',[idevento], (err, eventoSel) => {
