@@ -88,7 +88,7 @@ controller.guardarResultados = (req, res) => {
                            'FROM partido LEFT JOIN resultado ON partido.idpartido = resultado.idpartido, (SELECT idpais, nombre, archivo FROM pais) AS subConsultapais, ' + 
                            '(SELECT idpais, nombre, archivo FROM pais) AS subConsultapais2 ' +
                            'WHERE partido.equipo1 = subConsultapais.idpais AND partido.equipo2 = subConsultapais2.idpais AND partido.evento = ? ' + 
-                           'ORDER BY partido.grupo, partido.fecha', [evento], (err, partidos) => {
+                           'ORDER BY partido.fecha, partido.hora, partido.grupo', [evento], (err, partidos) => {
                     conn.query('SELECT * FROM evento WHERE idevento = ?',[evento], (err, eventoSel) => {
                         process.env.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
                                             
