@@ -102,10 +102,10 @@ controller.guardarQuiniela = (req, res) => {
 
                 if(fechaActual3 < FPartido){
                     conn.query('SELECT * FROM quin WHERE idpartido = ? AND idusuario = ? AND concurso = ?',[partidoFinal, idusuario, concurso], (err, partidoEspecifico) => {
-                        if(partidoEspecifico.length > 0){
+                        if(partidoEspecifico.length > 0 && marcador1 && marcador2){
                             conn.query('UPDATE quin SET equipo1 = ?, equipo2 = ? WHERE idquin = ?',[marcador1, marcador2, partidoEspecifico[0].idquin], (err, registroPartido) => {
                             });    
-                        }else{
+                        }else if(marcador1 && marcador2){
                             conn.query('INSERT INTO quin(idevento, idpartido, idusuario, equipo1, equipo2, concurso) VALUES (?, ?, ?, ?, ?, ?)',[evento, partidoFinal, idusuario, marcador1, marcador2, concurso], (err, registroPartido) => {
                             });  
                         }
