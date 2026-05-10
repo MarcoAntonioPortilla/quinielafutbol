@@ -32,7 +32,8 @@ controller.verResultadosOficiales = (req, res) => {
                        'FROM resultado, partido, (SELECT idpais, nombre, archivo FROM pais) AS subConsultapais, ' +
                        '(SELECT idpais, nombre, archivo FROM pais) AS subConsultapais2 ' +
                        'WHERE resultado.idpartido = partido.idpartido AND partido.equipo1 = subConsultapais.idpais AND ' +
-                       'partido.equipo2 = subConsultapais2.idpais AND partido.evento = ?', [idevento], (err, partidos) => {
+                       'partido.equipo2 = subConsultapais2.idpais AND partido.evento = ? ' + 
+                       'ORDER BY partido.fecha, partido.hora, partido.grupo', [idevento], (err, partidos) => {
                 conn.query('SELECT * FROM evento WHERE idevento = ?',[idevento], (err, eventoSel) => {
                     process.env.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
                                         

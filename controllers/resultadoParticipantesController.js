@@ -52,7 +52,7 @@ controller.verResultados = (req, res) => {
                             'partido.equipo2 = subConsultapais2.idpais AND partido.evento = ? ' +
 
                        'GROUP BY quin.idusuario, resultado.idpartido ' +     
-                       'ORDER BY quin.idusuario, partido.grupo, partido.fecha ', [concurso, idevento], (err, partidos) => {
+                       'ORDER BY quin.idusuario, partido.fecha, partido.hora, partido.grupo', [concurso, idevento], (err, partidos) => {
                 conn.query('SELECT * FROM evento WHERE idevento = ?',[idevento], (err, eventoSel) => {
                     process.env.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
                                         
