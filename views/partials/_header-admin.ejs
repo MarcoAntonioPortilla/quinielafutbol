@@ -36,7 +36,7 @@
     </head>
     <body>
         <nav class="navbar navbar-dark bg-dark"> <!--navbar navbar-expand-md navbar-dark fixed-top bg-dark-->
-            <a href="/" class="navbar-brand">Usuario Administrador: <strong> <%= process.env.NOMBRE_USUARIO %> </strong></a>
+            <a href="/" class="navbar-brand">Usuario Administrador: <strong> <%= dataSession.NOMBRE_USUARIO %> </strong></a>
         </nav>
 
         <!--<img src="../assets/img/Encabezado_Inegi_intranet.png" width="250" alt="logo">-->
@@ -89,7 +89,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/cambio_contrasena/<%= process.env.NOMBRE_USUARIO %>">Contraseña</a>
+                            <a class="nav-link active" aria-current="page" href="/cambio_contrasena/<%= dataSession.NOMBRE_USUARIO %>">Contraseña</a>
                         </li>
                         
                         

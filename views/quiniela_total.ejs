@@ -7,7 +7,7 @@
         <link rel="shortcut icon" href="assets/img/balon.png">
     </head>
     <body class="body-quiniela-total">
-        <% if(process.env.TIPO_USUARIO === "admin"){ %>
+        <% if(dataSession.TIPO_USUARIO === "admin"){ %>
             <%- include('partials/_header-admin') %>
         <%}else{%>    
             <%- include('partials/_header') %>
@@ -55,18 +55,18 @@
 
                 </div>
 
-                <% if(process.env.EVENTO_SEL_NOMBRE != ""){ %>
+                <% if(dataSession.EVENTO_SEL_NOMBRE != ""){ %>
                     <div class="col-md-8">
                         <div class="alineacionCentrada">
                             <center>
                                 <% if(eventos){ 
                                     for(var i = 0; i < eventos.length; i++){ 
-                                        if(eventos[i].nombre === process.env.EVENTO_SEL_NOMBRE){ %>
+                                        if(eventos[i].nombre === dataSession.EVENTO_SEL_NOMBRE){ %>
                                             <img class="tamanoLogo" src="../assets/img/<%= eventos[i].archivo %>" alt="logo">
                                         <% } %>
                                     <% } %>
                                 <% } %>        
-                                <strong><h2 class="text-primary fw-bold"><%- process.env.EVENTO_SEL_NOMBRE%></h2></strong>
+                                <strong><h2 class="text-primary fw-bold"><%- dataSession.EVENTO_SEL_NOMBRE%></h2></strong>
                             </center>
                         </div>
                     </div>

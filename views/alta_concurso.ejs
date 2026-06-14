@@ -8,7 +8,7 @@
         
     </head>
     <body>
-        <% if(process.env.TIPO_USUARIO === "admin"){ %>
+        <% if(dataSession.TIPO_USUARIO === "admin"){ %>
             <%- include('partials/_header-admin') %>
         <%}else{%>    
             <script>
@@ -41,7 +41,7 @@
                             <form action="/altaConcurso" method="post">
                                 <div class="form-group row mt-2"> 
                                     <div class="col-md-12">
-                                        <input class="form-control col-md-10" id="nombre" name="nombre" placeholder="Nombre del Concurso" maxlength="20" value="<%= process.env.CONCURSO %>" required>
+                                        <input class="form-control col-md-10" id="nombre" name="nombre" placeholder="Nombre del Concurso" maxlength="20" value="<%= dataSession.CONCURSO %>" required>
                                     </div>
                                 </div>
                                 <div class="form-group row mt-3">

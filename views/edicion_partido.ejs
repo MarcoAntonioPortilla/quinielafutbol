@@ -7,7 +7,7 @@
         <link rel="shortcut icon" href="assets/img/balon.png">
     </head>
     <body>
-        <% if(process.env.TIPO_USUARIO === "admin"){ %>
+        <% if(dataSession.TIPO_USUARIO === "admin"){ %>
             <%- include('partials/_header-admin') %>
         <%}else{%>    
             <script>
@@ -77,7 +77,7 @@
                 <div class="col-md-8">
                     <div class="alineacionCentrada">
                         <div class="alert alert-light" role="alert"> 
-                            <strong><h2><%- process.env.EVENTO_SEL_NOMBRE%></h2></strong>
+                            <strong><h2><%- dataSession.EVENTO_SEL_NOMBRE%></h2></strong>
                         </div>
                     </div>
                 </div>

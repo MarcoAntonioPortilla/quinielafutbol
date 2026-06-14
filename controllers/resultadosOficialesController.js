@@ -9,10 +9,13 @@ const controller = {};
 controller.selEventoOficial = (req, res) => {
     req.getConnection((err, conn) => {
         conn.query('SELECT * FROM evento', (err, eventos) => {
-            process.env.EVENTO_SEL_NOMBRE = "";
+            req.session.EVENTO_SEL_NOMBRE = "";
+
+            //process.env.EVENTO_SEL_NOMBRE = "";
 
             res.render('resultadosOficiales.ejs', {
                 eventos: eventos,
+                dataSession: req.session
             });
         });
     })
@@ -35,11 +38,14 @@ controller.verResultadosOficiales = (req, res) => {
                        'partido.equipo2 = subConsultapais2.idpais AND partido.evento = ? ' + 
                        'ORDER BY partido.fecha, partido.hora, partido.grupo', [idevento], (err, partidos) => {
                 conn.query('SELECT * FROM evento WHERE idevento = ?',[idevento], (err, eventoSel) => {
-                    process.env.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
+                    req.session.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
+                    
+                    //process.env.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
                                         
                     res.render('resultadosOficiales.ejs', {
                         eventos: eventos,
-                        data: partidos
+                        data: partidos,
+                        dataSession: req.session
                     });
                 });    
             }); 

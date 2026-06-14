@@ -10,7 +10,7 @@
         
     </head>
     <body class="body-contrasena">
-        <% if(process.env.TIPO_USUARIO === "admin"){ %>
+        <% if(dataSession.TIPO_USUARIO === "admin"){ %>
             <%- include('partials/_header-admin') %>
         <%}else{%>    
             <%- include('partials/_header') %>

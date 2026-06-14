@@ -5,12 +5,22 @@ const morgan = require('morgan');
 const mysql = require('mysql');
 const myconnection = require('express-myconnection');
 const fileUpload = require("express-fileupload");
+const session = require('express-session');
 
 const app = express();
 
 
 //Integramos el archivo config con las variables de entorno
 require('./config');
+
+
+//Configuramos los parámetros para crear una sesión del usuario
+app.use(session({
+    secret: 'tu_secreto_muy_seguro', // Firma la cookie de sesión 'tu_secreto_muy_seguro'
+    resave: false,                   // Evita guardar la sesión si no hubo modificaciones
+    saveUninitialized: true,         // Guarda sesiones nuevas aunque no tengan datos
+    cookie: { secure: false }         // Pon 'true' si usas HTTPS
+}));
 
 
 //Especificamos el motor que utilizaremos para las vistas 'ejs'
@@ -31,6 +41,9 @@ app.use(fileUpload());
 
 //Configurando Morgan para mensajes en consola
 app.use(morgan('dev'));
+
+
+
 
 
 //Configurando la conexión a la BD

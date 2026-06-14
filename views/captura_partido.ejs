@@ -7,7 +7,7 @@
     <link rel="shortcut icon" href="assets/img/balon.png">
 </head>
 <body>
-    <% if(process.env.TIPO_USUARIO === "admin"){ %>
+    <% if(dataSession.TIPO_USUARIO === "admin"){ %>
         <%- include('partials/_header-admin') %>
     <%}else{%>    
         <script>
@@ -56,7 +56,7 @@
                             <div class="form-group row mt-2">
                                 <div class="col-md-5">
                                     <label class="mt-3" for="fecha">Fecha:</label>
-                                    <input class="form-control col-md-10" type="date" name="fecha" value="<%= process.env.FECHA %>" required>
+                                    <input class="form-control col-md-10" type="date" name="fecha" value="<%= dataSession.FECHA %>" required>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="mt-3" for="hora">Hora:</label>
@@ -64,7 +64,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="mt-3" for="grupo">Grupo:</label>
-                                    <input class="form-control col-md-10" name="grupo" placeholder="Grupo" value="<%= process.env.GRUPO %>" onKeyUp="this.value = this.value.toUpperCase();" required>
+                                    <input class="form-control col-md-10" name="grupo" placeholder="Grupo" value="<%= dataSession.GRUPO %>" onKeyUp="this.value = this.value.toUpperCase();" required>
                                 </div>
                             </div>
                             <div class="form-group row mt-2">

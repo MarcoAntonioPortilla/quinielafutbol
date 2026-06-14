@@ -14,11 +14,12 @@ controller.visualizarConcurso = (req, res) => {
                 usuarios[i].nombre = seguridad.desencriptado(usuarios[i].nombre);
             }
             
-            process.env.CONCURSO = "";
+            req.session.CONCURSO = "";
             usuarios.reverse();
 
             res.render('alta_concurso.ejs', {
-                usuarios: usuarios
+                usuarios: usuarios,
+                dataSession: req.session
             });
         });
     });        
@@ -37,12 +38,13 @@ controller.altaConcurso = (req, res) => {
                     usuarios[i].nombre = seguridad.desencriptado(usuarios[i].nombre);
                 }
 
-                process.env.CONCURSO = nombre;
+                req.session.CONCURSO = nombre;
                 usuarios.reverse();
 
                 res.render('alta_concurso.ejs', {
                     alta: "Se le ha asignado el CONCURSO: "+ nombre + " al USUARIO seleccionado con Id: " + usuarioAlta,
-                    usuarios: usuarios
+                    usuarios: usuarios,
+                    dataSession: req.session
                 });
             });    
         });
@@ -58,13 +60,14 @@ controller.editarConcurso = (req, res) => {
                 usuarios[i].nombre = seguridad.desencriptado(usuarios[i].nombre);
             }
             
-            process.env.CONCURSO_ANTERIOR = "";
-            process.env.CONCURSO_NUEVO = "";
+            req.session.CONCURSO_ANTERIOR = "";
+            req.session.CONCURSO_NUEVO = "";
 
             usuarios.reverse();
 
             res.render('edicion_concurso.ejs', {
-                usuarios: usuarios
+                usuarios: usuarios,
+                dataSession: req.session
             });
         });
     });        
@@ -84,14 +87,15 @@ controller.guardarEditarConcurso = (req, res) => {
                     usuarios[i].nombre = seguridad.desencriptado(usuarios[i].nombre);
                 }
 
-                process.env.CONCURSO_ANTERIOR = nombreAnterior;
-                process.env.CONCURSO_NUEVO = nombre;
+                req.session.CONCURSO_ANTERIOR = nombreAnterior;
+                req.session.CONCURSO_NUEVO = nombre;
 
                 usuarios.reverse();
 
                 res.render('edicion_concurso.ejs', {
                     alta: "Se le ha asignado el CONCURSO: "+ nombre + " al USUARIO seleccionado con Id: " + usuarioAlta,
-                    usuarios: usuarios
+                    usuarios: usuarios,
+                    dataSession: req.session
                 });
             });    
         });

@@ -9,9 +9,17 @@ const controller = {};
 //MÉTODOS
 //Regresa a la ventana de login
 controller.inicio = (req, res) => {
-    process.env.TOKEN = "";
+
+    req.session.destroy((err) => {
+        if (err) {
+        return res.send('Error al cerrar sesión');
+        }
+        res.clearCookie('connect.sid'); // Limpia la cookie de sesión
+        res.render('login.ejs');
+        
+        //res.send('Sesión cerrada');
+    });
     
-    res.render('login.ejs');
 };
 
 
@@ -73,15 +81,22 @@ controller.login = (req, res) => {
                                 process.env.SEED, { expiresIn: process.env.CADUCIDAD_TOKEN });
                             console.log('Éntramod al jwt');
                             console.log('Éxito: Ingresando a sistema');
-                                                
-                            process.env.TOKEN = token;
+                              
+                            req.session.TOKEN = token;
+
+                            //process.env.TOKEN = token;
                                             
                             console.log('token de login.js: ' + token);
+
+                            req.session.TIPO_USUARIO = seguridad.desencriptado(usuario[0].tipo);
+                            req.session.NOMBRE_USUARIO = seguridad.desencriptado(usuario[0].nombre);
+                            req.session.ID_USUARIO = usuario[0].idusuario;
+                            req.session.CLAVE_CONCURSO = usuario[0].concurso;
                         
-                            process.env.TIPO_USUARIO = seguridad.desencriptado(usuario[0].tipo);
+                            /*process.env.TIPO_USUARIO = seguridad.desencriptado(usuario[0].tipo);
                             process.env.NOMBRE_USUARIO = seguridad.desencriptado(usuario[0].nombre);
                             process.env.ID_USUARIO = usuario[0].idusuario;
-                            process.env.CLAVE_CONCURSO = usuario[0].concurso;
+                            process.env.CLAVE_CONCURSO = usuario[0].concurso;*/
                                             
 
                             /*process.env.TIPO_USUARIO = usuario[0].tipo;
@@ -91,7 +106,8 @@ controller.login = (req, res) => {
 
                             res.render('inicio.ejs', {
                                 data: usuario[0],
-                                token: token
+                                token: token,
+                                dataSession: req.session
                             });
                         }
                     }else{

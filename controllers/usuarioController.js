@@ -8,7 +8,9 @@ const controller = {};
 //MÉTODOS
 //Visualiza la pantalla de alta usuario
 controller.visualizar_alta_usuario = (req, res) => {
-    res.render('alta_usuario.ejs');
+    res.render('alta_usuario.ejs', {
+        dataSession: req.session
+    });
 }
 
 
@@ -22,12 +24,14 @@ controller.alta_usuario = (req, res) => {
         conn.query('SELECT * FROM usuario WHERE nombre = ?',[nombre], (err, usuarios) => {
             if(usuarios.length > 0){
                 res.render('alta_usuario.ejs', {
-                    error: "Ya está REGISTRADA la cuenta: " + req.body.nombre
+                    error: "Ya está REGISTRADA la cuenta: " + req.body.nombre,
+                    dataSession: req.session
                 });        
             }else{
                 conn.query('INSERT INTO usuario (nombre, password, tipo) VALUES (?, ?, ?)', [nombre, password, tipo], (err, usuario) => {    
                     res.render('alta_usuario.ejs', {
-                        alta: "Se ha dada de ALTA correctamente el usuario: " + req.body.nombre
+                        alta: "Se ha dada de ALTA correctamente el usuario: " + req.body.nombre,
+                        dataSession: req.session
                     });
                 });
             }
@@ -47,9 +51,13 @@ controller.visualizar_usuarios = (req, res) => {
                     usuarios[i].tipo = seguridad.desencriptado(usuarios[i].tipo);
                 }
             }
-            process.env.MENSAJE = "";
+
+            req.session.MENSAJE = "";
+            //process.env.MENSAJE = "";
+
             res.render('edicion_usuario.ejs', {
-                data: usuarios
+                data: usuarios,
+                dataSession: req.session
             });
         });
     });
@@ -62,7 +70,10 @@ controller.eliminar_usuario = (req, res) => {
 
     req.getConnection((err, conn) => {
         conn.query('DELETE FROM usuario WHERE idusuario = ?', [id], (err, usuario) => {
-            process.env.MENSAJE = "Se ELIMINÓ correctamente el usuario";
+            req.session.MENSAJE = "Se ELIMINÓ correctamente el usuario";
+
+            //process.env.MENSAJE = "Se ELIMINÓ correctamente el usuario";
+            
             res.redirect('/visualizar_usuarios2');
         });
     })
@@ -81,7 +92,8 @@ controller.visualizar_usuarios2 = (req, res) => {
                 }
             }
             res.render('edicion_usuario.ejs', {
-                data: usuarios
+                data: usuarios,
+                dataSession: req.session 
             });
         });
     });
@@ -106,13 +118,17 @@ controller.actualizar_usuario = (req, res) => {
                 usuario_act[0].nombre = seguridad.desencriptado(usuario_act[0].nombre);
                 usuario_act[0].password = seguridad.desencriptado(usuario_act[0].password);
                 usuario_act[0].tipo = seguridad.desencriptado(usuario_act[0].tipo);
-                                
-                process.env.TIPO_USUARIO = "admin";
-                process.env.MENSAJE = "";
+                
+                req.session.TIPO_USUARIO = "admin";
+                req.session.MENSAJE = "";
+
+                /*process.env.TIPO_USUARIO = "admin";
+                process.env.MENSAJE = "";*/
 
                 res.render('edicion_usuario.ejs', {
                     data: usuarios,
-                    usuario_Mod: usuario_act[0] 
+                    usuario_Mod: usuario_act[0],
+                    dataSession: req.session 
                 });
             });
         });
@@ -140,10 +156,13 @@ controller.registrar_cambios = (req, res) => {
                     }
                 }
                 
-                process.env.MENSAJE = "Se ha ACTUALIZADO la información del usuario: " + req.body.nombre;
+                req.session.MENSAJE = "Se ha ACTUALIZADO la información del usuario: " + req.body.nombre;
+
+                //process.env.MENSAJE = "Se ha ACTUALIZADO la información del usuario: " + req.body.nombre;
         
                 res.render('edicion_usuario.ejs', {
-                    data: usuarios
+                    data: usuarios,
+                    dataSession: req.session 
                 });
             });    
         });
@@ -160,7 +179,8 @@ controller.cambio_contrasena = (req, res) => {
             usuario_act[0].nombre = seguridad.desencriptado(usuario_act[0].nombre);
             
             res.render('cambio_contrasena.ejs', {
-                data: usuario_act[0]
+                data: usuario_act[0],
+                dataSession: req.session
             });
         });    
     });    
@@ -187,7 +207,8 @@ controller.actualizar_contrasena = (req, res) => {
 
                     res.render('cambio_contrasena.ejs', {
                         data: usuario_act[0],
-                        error: 'Contraseña anterior INCORRECTA.'
+                        error: 'Contraseña anterior INCORRECTA.',
+                        dataSession: req.session
                     });
                 }); 
             }else if(password1 !== password2){
@@ -196,7 +217,8 @@ controller.actualizar_contrasena = (req, res) => {
 
                     res.render('cambio_contrasena.ejs', {
                         data: usuario_act[0],
-                        error: 'Contraseñas nuevas NO COINCIDEN.'
+                        error: 'Contraseñas nuevas NO COINCIDEN.',
+                        dataSession: req.session
                     });
                 }); 
             }else if(!nombre.match(usuarioRegex) || !password1.match(usuarioRegex)){
@@ -205,7 +227,8 @@ controller.actualizar_contrasena = (req, res) => {
 
                     res.render('cambio_contrasena.ejs', {
                         data: usuario_act[0],
-                        error: 'El USUARIO o la CONTRASEÑA no tienen el formato permitido. Se pueden ocupar mayúsculas, minúsculas, mínimo 8 caracteres y caracteres especiales: !.@#$%^&*'
+                        error: 'El USUARIO o la CONTRASEÑA no tienen el formato permitido. Se pueden ocupar mayúsculas, minúsculas, mínimo 8 caracteres y caracteres especiales: !.@#$%^&*',
+                        dataSession: req.session
                     });
                 }); 
             }else{
@@ -213,11 +236,13 @@ controller.actualizar_contrasena = (req, res) => {
                     conn.query('UPDATE usuario SET nombre = ?, password = ? WHERE idusuario = ?', [seguridad.encriptado(nombre), seguridad.encriptado(password1), id], (err, usuario_act) => {
                         conn.query('SELECT * FROM usuario WHERE idusuario = ?', [id], (err, usuario) => {
                             usuario[0].nombre = seguridad.desencriptado(usuario[0].nombre);
-                            process.env.NOMBRE_USUARIO = nombre;
+                            req.session.NOMBRE_USUARIO = nombre;
+                            //process.env.NOMBRE_USUARIO = nombre;
                             
                             res.render('cambio_contrasena.ejs', {
                                 data: usuario[0],
-                                mensaje: 'Se han MODIFICADO de manera correcta los datos del usuario.'
+                                mensaje: 'Se han MODIFICADO de manera correcta los datos del usuario.',
+                                dataSession: req.session
                             });
                         });
                     });        

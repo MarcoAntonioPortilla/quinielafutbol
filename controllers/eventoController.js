@@ -6,18 +6,21 @@ const controller = {};
 //MÉTODOS
 //Visualiza la pantalla de alta evento
 controller.visualizar_evento = (req, res) => {
-    res.render('alta_evento.ejs');
+    res.render('alta_evento.ejs', {
+        dataSession: req.session
+    });
 }
 
 
 //Da de alta un nuevo evento
 controller.alta_Nuevo_Evento = (req, res) => {
-    const data = req.body;
+    const varNombre = req.body.nombre;
 
     req.getConnection((err, conn) => {
-        conn.query('INSERT INTO evento SET ?', [data], (err, evento) => {
+        conn.query('INSERT INTO evento SET ?', [varNombre], (err, evento) => {
             res.render('alta_evento.ejs', {
-                alta: "Se ha dada de ALTA correctamente el evento: " + req.body.nombre + "."
+                alta: "Se ha dada de ALTA correctamente el evento: " + req.body.nombre + ".",
+                dataSession: req.session
             });
         });
     });
@@ -29,7 +32,8 @@ controller.mostrar_evento = (req, res) => {
     req.getConnection((err, conn) => {
         conn.query('SELECT * FROM evento', (err, eventos) => {
             res.render('eliminar_evento.ejs', {
-                data: eventos
+                data: eventos,
+                dataSession: req.session
             });
         });
     });
@@ -45,7 +49,8 @@ controller.eliminar_evento = (req, res) => {
             conn.query('SELECT * FROM evento', (err, eventos) => {
                 res.render('eliminar_evento.ejs', {
                     data: eventos,
-                    borrado: 'Se ha ELIMINADO el evento seleccionado.'
+                    borrado: 'Se ha ELIMINADO el evento seleccionado.',
+                    dataSession: req.session
                 });
             });    
         });

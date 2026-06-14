@@ -11,7 +11,8 @@ controller.visualizar_captura_partido = (req, res) => {
             conn.query('SELECT * FROM pais ORDER BY nombre', (err, paises) => {
                 res.render('captura_partido.ejs', {
                     eventos: eventos,
-                    paises: paises
+                    paises: paises,
+                    dataSession: req.session
                 });
             });    
         });
@@ -28,15 +29,16 @@ controller.alta_nuevo_partido = (req, res) => {
             conn.query('SELECT * FROM evento', (err, eventos) => {    
                 conn.query('SELECT * FROM pais ORDER BY nombre', (err, paises) => {
                     conn.query('SELECT * FROM evento WHERE idevento = ?',[req.body.evento], (err, nombreEvento) => {
-                        process.env.FECHA = req.body.fecha;
-                        process.env.GRUPO = req.body.grupo;
+                        req.session.FECHA = req.body.fecha;
+                        req.session.GRUPO = req.body.grupo;
                         
                         res.render('captura_partido.ejs', {
                             alta: "Se ha dada de ALTA correctamente el partido.",
                             eventoSel: req.body.evento,
                             nombreEvento: nombreEvento[0].nombre,
                             eventos: eventos,
-                            paises: paises
+                            paises: paises,
+                            dataSession: req.session
                         });
                     });    
                 });    
@@ -50,10 +52,11 @@ controller.alta_nuevo_partido = (req, res) => {
 controller.visualizar_edicion_partido = (req, res) => {
     req.getConnection((err, conn) => {
         conn.query('SELECT * FROM evento', (err, eventos) => {
-            process.env.EVENTO_SEL_NOMBRE = "";
+            req.session.EVENTO_SEL_NOMBRE = "";
             
             res.render('edicion_partido.ejs', {
-                eventos: eventos
+                eventos: eventos,
+                dataSession: req.session
             });
         });    
     });    
@@ -74,12 +77,13 @@ controller.mostrar_partidos = (req, res) => {
                        'WHERE partido.equipo1 = subConsultapais.idpais AND partido.equipo2 = subConsultapais2.idpais ' +
                        'AND partido.evento = ? ORDER BY partido.fecha, partido.hora, partido.grupo', [idevento], (err, partidos) => {
                 conn.query('SELECT * FROM evento WHERE idevento = ?',[idevento], (err, eventoSel) => {
-                    process.env.EVENTO_SEL = idevento;
-                    process.env.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
+                    req.session.EVENTO_SEL = idevento;
+                    req.session.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
                                         
                     res.render('edicion_partido.ejs', {
                         eventos: eventos,
-                        data: partidos
+                        data: partidos,
+                        dataSession: req.session
                     });
                 });    
             });    
@@ -102,12 +106,13 @@ controller.eliminar_partido = (req, res) => {
                            'FROM partido, (SELECT idpais, nombre, archivo FROM pais) AS subConsultapais, ' + 
                            '(SELECT idpais, nombre, archivo FROM pais) AS subConsultapais2 ' +
                            'WHERE partido.equipo1 = subConsultapais.idpais AND partido.equipo2 = subConsultapais2.idpais ' +
-                           'AND partido.evento = ? ORDER BY partido.grupo, partido.fecha', [process.env.EVENTO_SEL], (err, partidos) => {
+                           'AND partido.evento = ? ORDER BY partido.grupo, partido.fecha', [req.session.EVENTO_SEL], (err, partidos) => {
             
                     res.render('edicion_partido.ejs', {
                         eventos: eventos,
                         data: partidos,
-                        mensaje: 'Se ha ELIMINADO el partido seleccionado.' 
+                        mensaje: 'Se ha ELIMINADO el partido seleccionado.',
+                        dataSession: req.session 
                     });
                 });
             });    
@@ -129,22 +134,23 @@ controller.actualizar_partido = (req, res) => {
                        'FROM partido, (SELECT idpais, nombre, archivo FROM pais) AS subConsultapais, ' + 
                        '(SELECT idpais, nombre, archivo FROM pais) AS subConsultapais2 ' +
                        'WHERE partido.equipo1 = subConsultapais.idpais AND partido.equipo2 = subConsultapais2.idpais ' +
-                       'AND partido.evento = ? ORDER BY partido.grupo, partido.fecha', [process.env.EVENTO_SEL], (err, partidos) => {
+                       'AND partido.evento = ? ORDER BY partido.grupo, partido.fecha', [req.session.EVENTO_SEL], (err, partidos) => {
                 conn.query('SELECT partido.*, subConsultapais.idpais AS pais1, subConsultapais.nombre AS nombre1, ' + 
                            'subConsultapais.archivo AS archivo1, subConsultapais2.idpais AS pais2, subConsultapais2.nombre AS nombre2, ' + 
                            'subConsultapais2.archivo AS archivo2 ' +
                            'FROM partido, (SELECT idpais, nombre, archivo FROM pais) AS subConsultapais, ' + 
                            '(SELECT idpais, nombre, archivo FROM pais) AS subConsultapais2 ' +
                            'WHERE partido.equipo1 = subConsultapais.idpais AND partido.equipo2 = subConsultapais2.idpais ' +
-                           'AND partido.evento = ? AND partido.idpartido = ?', [process.env.EVENTO_SEL, id], (err, partidoSel) => {
+                           'AND partido.evento = ? AND partido.idpartido = ?', [req.session.EVENTO_SEL, id], (err, partidoSel) => {
                     conn.query('SELECT * FROM pais ORDER BY nombre', (err, paises) => {        
-                        process.env.MENSAJE = "";
+                        req.session.MENSAJE = "";
 
                         res.render('edicion_partido.ejs', {
                             eventos: eventos,
                             data: partidos,
                             partidoSel: partidoSel[0],
-                            paises: paises
+                            paises: paises,
+                            dataSession: req.session
                         });  
                     });    
                 });        
@@ -176,12 +182,13 @@ controller.registrar_cambios_partido = (req, res) => {
                         'FROM partido, (SELECT idpais, nombre, archivo FROM pais) AS subConsultapais, ' + 
                         '(SELECT idpais, nombre, archivo FROM pais) AS subConsultapais2 ' +
                         'WHERE partido.equipo1 = subConsultapais.idpais AND partido.equipo2 = subConsultapais2.idpais ' +
-                        'AND partido.evento = ? ORDER BY partido.grupo, partido.fecha', [process.env.EVENTO_SEL], (err, partidos) => {
+                        'AND partido.evento = ? ORDER BY partido.grupo, partido.fecha', [req.session.EVENTO_SEL], (err, partidos) => {
                 
                         res.render('edicion_partido.ejs', {
                             eventos: eventos,
                             data: partidos,
-                            mensaje: 'Se ha ACTUALIZADO el partido seleccionado.'
+                            mensaje: 'Se ha ACTUALIZADO el partido seleccionado.',
+                            dataSession: req.session
                         });
                 });
             });    

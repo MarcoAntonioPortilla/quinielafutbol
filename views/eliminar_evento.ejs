@@ -7,7 +7,7 @@
         <link rel="shortcut icon" href="assets/img/balon.png">
     </head>
     <body>
-        <% if(process.env.TIPO_USUARIO === "admin"){ %>
+        <% if(dataSession.TIPO_USUARIO === "admin"){ %>
             <%- include('partials/_header-admin') %>
         <%}else{%>    
             <script>

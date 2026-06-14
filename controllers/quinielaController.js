@@ -31,10 +31,13 @@ const SQL_verPartidosTotal = 'SELECT partido.*, quin.idevento AS quinevento, qui
 controller.seleccionarEvento = (req, res) => {
     req.getConnection((err, conn) => {
         conn.query('SELECT * FROM evento', (err, eventos) => {
-            process.env.EVENTO_SEL_NOMBRE = "";
+            req.session.EVENTO_SEL_NOMBRE = "";
+
+            //process.env.EVENTO_SEL_NOMBRE = "";
 
             res.render('quiniela.ejs', {
                 eventos: eventos,
+                dataSession: req.session
             });
         });
     })
@@ -44,25 +47,31 @@ controller.seleccionarEvento = (req, res) => {
 //Mostramos los partidos seleccionados según el evento para su captura
 controller.mostrarQuiniela = (req, res) => {
     const idevento = req.body.evento;
-    const usuario = parseInt(process.env.ID_USUARIO);
-    const concurso = process.env.CLAVE_CONCURSO;
+    const usuario = parseInt(req.session.ID_USUARIO);
+    const concurso = req.session.CLAVE_CONCURSO;
+    
+
+    /*const usuario = parseInt(process.env.ID_USUARIO);
+    const concurso = process.env.CLAVE_CONCURSO;*/
 
     req.getConnection((err, conn) => {
         conn.query('SELECT * FROM evento', (err, eventos) => {
             conn.query(SQL_verPartidos, [usuario, concurso, idevento], (err, partidos) => {
                 conn.query('SELECT * FROM evento WHERE idevento = ?',[idevento], (err, eventoSel) => {
-                    process.env.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
+                    req.session.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
                     
                     //if(partidos.length > 0){
                     if(partidos && partidos.length > 0){
                     //if(partidos){    
                         res.render('quiniela.ejs', {
                             eventos: eventos,
-                            data: partidos
+                            data: partidos,
+                            dataSession: req.session
                         });
                     }else{
                         res.render('quiniela.ejs', {
                             eventos: eventos,
+                            dataSession: req.session
                         });
                     }
                 });    
@@ -75,8 +84,11 @@ controller.mostrarQuiniela = (req, res) => {
 //Guardamos los resultados capturados por el usuario y mostramos de nueva cuenta los partidos y sus resultados asignados
 controller.guardarQuiniela = (req, res) => {
     const evento = req.body.evento;
-    const idusuario = parseInt(process.env.ID_USUARIO);
-    const concurso = process.env.CLAVE_CONCURSO;
+    const idusuario = parseInt(req.session.ID_USUARIO);
+    const concurso = req.session.CLAVE_CONCURSO;
+
+    /*const idusuario = parseInt(process.env.ID_USUARIO);
+    const concurso = process.env.CLAVE_CONCURSO;*/
     
     req.getConnection((err, conn) => {
         conn.query('SELECT * FROM partido WHERE evento = ?',[evento], (err, partidosEvento) => {
@@ -116,12 +128,14 @@ controller.guardarQuiniela = (req, res) => {
             conn.query('SELECT * FROM evento', (err, eventos) => {
                 conn.query(SQL_verPartidos, [idusuario, concurso, evento], (err, partidos) => {
                     conn.query('SELECT * FROM evento WHERE idevento = ?',[evento], (err, eventoSel) => {
-                        process.env.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
+                        req.session.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
+                        //process.env.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
                                             
                         res.render('quiniela.ejs', {
                             mensaje: "Se han REGISTRADO los marcadores capturados.",
                             eventos: eventos,
-                            data: partidos
+                            data: partidos,
+                            dataSession: req.session
                         });
                     });    
                 }); 
@@ -141,10 +155,14 @@ controller.guardarQuiniela = (req, res) => {
 controller.seleccionarEventoTotal = (req, res) => {
     req.getConnection((err, conn) => {
         conn.query('SELECT * FROM evento', (err, eventos) => {
-            process.env.EVENTO_SEL_NOMBRE = "";
+            req.session.EVENTO_SEL_NOMBRE = "";
+            //req.session.TIPO_USUARIO = req.session.TIPO_USUARIO;
+            
+            //process.env.EVENTO_SEL_NOMBRE = "";
 
             res.render('quiniela_total.ejs', {
                 eventos: eventos,
+                dataSession: req.session
             });
         });
     })
@@ -154,23 +172,30 @@ controller.seleccionarEventoTotal = (req, res) => {
 //Mostramos los partidos seleccionados según el evento para su captura
 controller.mostrarQuinielaTotal = (req, res) => {
     const idevento = req.body.evento;
-    const usuario = parseInt(process.env.ID_USUARIO);
-    const concurso = process.env.CLAVE_CONCURSO;
+    const usuario = parseInt(req.session.ID_USUARIO);
+    const concurso = req.session.CLAVE_CONCURSO;
+
+    /*const usuario = parseInt(process.env.ID_USUARIO);
+    const concurso = process.env.CLAVE_CONCURSO;*/
 
     req.getConnection((err, conn) => {
         conn.query('SELECT * FROM evento', (err, eventos) => {
             conn.query(SQL_verPartidosTotal, [usuario, concurso, idevento], (err, partidos) => {
                 conn.query('SELECT * FROM evento WHERE idevento = ?',[idevento], (err, eventoSel) => {
-                    process.env.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
+                    req.session.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
+                    
+                    //process.env.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
                                 
                     if(partidos.length > 0){
                         res.render('quiniela_total.ejs', {
                             eventos: eventos,
-                            data: partidos
+                            data: partidos,
+                            dataSession: req.session
                         });
                     }else{
                         res.render('quiniela_total.ejs', {
                             eventos: eventos,
+                            dataSession: req.session
                         });
                     }
                 });    
@@ -183,8 +208,11 @@ controller.mostrarQuinielaTotal = (req, res) => {
 //Guardamos los resultados capturados por el usuario y mostramos de nueva cuenta los partidos y sus resultados asignados
 controller.guardarQuinielaTotal = (req, res) => {
     const evento = req.body.evento;
-    const idusuario = parseInt(process.env.ID_USUARIO);
-    const concurso = process.env.CLAVE_CONCURSO;
+    const idusuario = parseInt(req.session.ID_USUARIO);
+    const concurso = req.session.CLAVE_CONCURSO;
+
+    /*const idusuario = parseInt(process.env.ID_USUARIO);
+    const concurso = process.env.CLAVE_CONCURSO;*/
     
     req.getConnection((err, conn) => {
         conn.query('SELECT * FROM partido WHERE evento = ?',[evento], (err, partidosEvento) => {
@@ -224,12 +252,15 @@ controller.guardarQuinielaTotal = (req, res) => {
             conn.query('SELECT * FROM evento', (err, eventos) => {
                 conn.query(SQL_verPartidosTotal, [idusuario, concurso, evento], (err, partidos) => {
                     conn.query('SELECT * FROM evento WHERE idevento = ?',[evento], (err, eventoSel) => {
-                        process.env.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
+                        req.session.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
+                        
+                        //process.env.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
                                             
                         res.render('quiniela_total.ejs', {
                             mensaje: "Se han REGISTRADO los marcadores capturados.",
                             eventos: eventos,
-                            data: partidos
+                            data: partidos,
+                            dataSession: req.session
                         });
                     });    
                 }); 

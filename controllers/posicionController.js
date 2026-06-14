@@ -12,10 +12,13 @@ const controller = {};
 controller.posiciones = (req, res) => {
     req.getConnection((err, conn) => {
         conn.query('SELECT * FROM evento', (err, eventos) => {
-            process.env.EVENTO_SEL_NOMBRE = "";
+            req.session.EVENTO_SEL_NOMBRE = "";
+
+            //process.env.EVENTO_SEL_NOMBRE = "";
 
             res.render('posicion.ejs', {
                 eventos: eventos,
+                dataSession: req.session
             });
         });
     })
@@ -25,7 +28,9 @@ controller.posiciones = (req, res) => {
 //Mostramos las posiciones de los participantes según el evento seleccionado
 controller.verPosiciones = (req, res) => {
     const idevento = req.body.evento;
-    const concurso = process.env.CLAVE_CONCURSO;
+    const concurso = req.session.CLAVE_CONCURSO;
+
+    //const concurso = process.env.CLAVE_CONCURSO;
     
     req.getConnection((err, conn) => {
         conn.query('SELECT * FROM evento', (err, eventos) => {
@@ -44,11 +49,14 @@ controller.verPosiciones = (req, res) => {
                         participantes[i].nombre = seguridad.desencriptado(participantes[i].nombre);
                     }
                     
-                    process.env.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
+                    req.session.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
+
+                    //process.env.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
                                         
                     res.render('posicion.ejs', {
                         eventos: eventos,
-                        data: participantes
+                        data: participantes,
+                        dataSession: req.session
                     });
                 });    
             }); 

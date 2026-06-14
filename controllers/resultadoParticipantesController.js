@@ -12,10 +12,13 @@ const controller = {};
 controller.selEvento = (req, res) => {
     req.getConnection((err, conn) => {
         conn.query('SELECT * FROM evento', (err, eventos) => {
-            process.env.EVENTO_SEL_NOMBRE = "";
+            req.session.EVENTO_SEL_NOMBRE = "";
+
+            //process.env.EVENTO_SEL_NOMBRE = "";
             
             res.render('resultadoParticipantes.ejs', {
                 eventos: eventos,
+                dataSession: req.session
             });
         });
     })
@@ -25,8 +28,11 @@ controller.selEvento = (req, res) => {
 //Mostramos los partidos seleccionados según el evento de todos los usuarios
 controller.verResultados = (req, res) => {
     const idevento = req.body.evento;
-    const usuario = parseInt(process.env.ID_USUARIO);
-    const concurso = process.env.CLAVE_CONCURSO;
+    const usuario = parseInt(req.session.ID_USUARIO);
+    const concurso = req.session.CLAVE_CONCURSO;
+    
+    /*const usuario = parseInt(process.env.ID_USUARIO);
+    const concurso = process.env.CLAVE_CONCURSO;*/
 
     req.getConnection((err, conn) => {
         conn.query('SELECT * FROM evento', (err, eventos) => {
@@ -54,7 +60,10 @@ controller.verResultados = (req, res) => {
                        'GROUP BY quin.idusuario, resultado.idpartido ' +     
                        'ORDER BY quin.idusuario, partido.fecha, partido.hora, partido.grupo', [concurso, idevento], (err, partidos) => {
                 conn.query('SELECT * FROM evento WHERE idevento = ?',[idevento], (err, eventoSel) => {
-                    process.env.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
+                    
+                    req.session.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
+
+                    //process.env.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
                                         
                     for(let i = 0; i < partidos.length; i++){
                         partidos[i].usuarionombre = seguridad.desencriptado(partidos[i].usuarionombre);
@@ -62,7 +71,8 @@ controller.verResultados = (req, res) => {
 
                     res.render('resultadoParticipantes.ejs', {
                         eventos: eventos,
-                        data: partidos
+                        data: partidos,
+                        dataSession: req.session
                     });
                 });    
             }); 

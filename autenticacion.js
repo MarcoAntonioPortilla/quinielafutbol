@@ -6,9 +6,12 @@ const jwt = require('jsonwebtoken');
 
 //Función de verificación del token
 let verificaToken = (req, res, next) => {
-    let token = process.env.TOKEN;
+    let token = req.session.TOKEN;
+
+    //let token = process.env.TOKEN;
     console.log('token de autenticacion.js: ' + token);
 
+    
     jwt.verify(token, process.env.SEED, (err, decoded) => {
         if (err) {
             console.log('Error: Es necesario loguearse para accesar al sistema');

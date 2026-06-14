@@ -11,6 +11,7 @@ controller.resultadoSelEvento = (req, res) => {
         conn.query('SELECT * FROM evento', (err, eventos) => {
             res.render('resultado.ejs', {
                 eventos: eventos,
+                dataSession: req.session
             });
         });
     })
@@ -32,11 +33,12 @@ controller.mostrarPartidos = (req, res) => {
                        'WHERE partido.equipo1 = subConsultapais.idpais AND partido.equipo2 = subConsultapais2.idpais AND partido.evento = ? ' + 
                        'ORDER BY partido.fecha, partido.hora, partido.grupo', [idevento], (err, partidos) => {
                 conn.query('SELECT * FROM evento WHERE idevento = ?',[idevento], (err, eventoSel) => {
-                    process.env.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
+                    req.session.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
                                         
                     res.render('resultado.ejs', {
                         eventos: eventos,
-                        data: partidos
+                        data: partidos,
+                        dataSession: req.session
                     });
                 });    
             }); 
@@ -90,12 +92,13 @@ controller.guardarResultados = (req, res) => {
                            'WHERE partido.equipo1 = subConsultapais.idpais AND partido.equipo2 = subConsultapais2.idpais AND partido.evento = ? ' + 
                            'ORDER BY partido.fecha, partido.hora, partido.grupo', [evento], (err, partidos) => {
                     conn.query('SELECT * FROM evento WHERE idevento = ?',[evento], (err, eventoSel) => {
-                        process.env.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
+                        req.session.EVENTO_SEL_NOMBRE = eventoSel[0].nombre;
                                             
                         res.render('resultado.ejs', {
                             mensaje: "Se han REGISTRADO los marcadores capturados.",
                             eventos: eventos,
-                            data: partidos
+                            data: partidos,
+                            dataSession: req.session
                         });
                     });    
                 }); 
