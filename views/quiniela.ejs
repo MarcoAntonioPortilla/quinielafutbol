@@ -133,8 +133,10 @@
                                                         let fechaActual2 = fechaActual.toLocaleString("en-US", {timeZone: 'America/Mexico_City', hour12: false});
                                                         let fechaActual3 = new Date(fechaActual2);
 
-                                                        let fechaPartido = new Date(data[i].fecha);
-                                                        let fechaPartido2 = fechaPartido.toLocaleString("en-US", {timeZone: 'America/Mexico_City', hour12: false});
+                                                        let fechaTrans = data[i].fecha;
+
+                                                        let fechaPartido = new Date(fechaTrans);
+                                                        let fechaPartido2 = fechaPartido.toLocaleString("en-US", {timeZone: 'UTC', hour12: false});
                                                         let fechaPartido3 = fechaPartido2.slice(0, 10);
                                                         let fechaPartido4 = fechaPartido3 + ", " + data[i].hora;
                                                         let fechaPartido5 = new Date(fechaPartido4);
