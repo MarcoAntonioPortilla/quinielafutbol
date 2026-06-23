@@ -129,13 +129,13 @@
                                                         
                                                         
                                                 
-                                                        <% let fechaActual = new Date();
+                                                     <% let fechaActual = new Date();
                                                         let fechaActual2 = fechaActual.toLocaleString("en-US", {timeZone: 'America/Mexico_City', hour12: false});
                                                         let fechaActual3 = new Date(fechaActual2);
 
-                                                        let fechaTrans = data[i].fecha;
+                                                        
 
-                                                        let fechaPartido = new Date(fechaTrans);
+                                                        let fechaPartido = new Date(data[i].fecha);
                                                         let fechaPartido2 = fechaPartido.toLocaleString("en-US", {timeZone: 'UTC', hour12: false});
                                                         let fechaPartido3 = fechaPartido2.slice(0, 10);
                                                         let fechaPartido4 = fechaPartido3 + ", " + data[i].hora;
@@ -144,13 +144,13 @@
                                                     
                                                         if(fechaActual3 <= fechaPartido5){ %>
                                                             <input class="inputMarcador form-control mr-sm-4" name="Eq_1_<%= data[i].idpartido %>" onkeypress="comprueba(this)" onblur="comprueba(this)" type="number" min="0" pattern="^[0-9]+" value="<%= data[i].quinequipo1 %>" >
-                                                            <input value="<%= fechaActual3 %>" >
+                                                           
                                                             
 
 
                                                         <% }else{ %>    
                                                             <input class="inputDeshabilitado inputMarcador form-control mr-sm-4" name="Eq_1_<%= data[i].idpartido %>" value="<%= data[i].quinequipo1 %>" readonly >  <!--onkeypress="comprueba(this)" onblur="comprueba(this)" type="number" min="0" pattern="^[0-9]+"-->
-                                                            <input value="<%= fechaActual3 %>" >
+                                                            
                                                         <% } %>    
                                                 </td>
                                                 <td>
@@ -159,15 +159,15 @@
                                                 <td>
                                                     <%  if(fechaActual3 <= fechaPartido5){ %>
                                                             <input class="inputMarcador form-control mr-sm-4" name="Eq_2_<%= data[i].idpartido %>" onkeypress="comprueba(this)" onblur="comprueba(this)" type="number" min="0" pattern="^[0-9]+" value="<%= data[i].quinequipo2 %>">
-                                                            <input value="<%= fechaPartido5 %>" >
+                                                            
                                                             
                                                         
                                                         <% }else{ %>    
                                                             <input class="inputDeshabilitado inputMarcador form-control mr-sm-4" name="Eq_2_<%= data[i].idpartido %>" value="<%= data[i].quinequipo2 %>" readonly >
-                                                            <input value="<%= fechaPartido5 %>" >
+                                                            
                                                         <% } %>    
 
-                                                        <input name="FechaPartido_<%= data[i].idpartido %>" value="<%= fechaPartido2 %>" type="hidden">
+                                                        <input name="FechaPartido_<%= data[i].idpartido %>" value="<%= fechaPartido5 %>" type="hidden">
                                                 </td>
                                                 <td> 
                                                     <center>

@@ -99,13 +99,16 @@
                                             }
                                     %>
                                             <tr>
-                                                <td class="textoGrupo"> 
+                                                <td class="textoMarcador"> 
                                                     <% if(varPosicion === 1){ %>
                                                         <img src="../assets/img/primer_lugar.png" width="80" alt="logo">
                                                     <% }else if(varPosicion === 2){ %>
                                                         <img src="../assets/img/segundo_lugar.png" width="80" alt="logo">
                                                     <% }else if(varPosicion === 3){ %>    
                                                         <img src="../assets/img/tercer_lugar.png" width="80" alt="logo">
+                                                    <% }else if(varPosicion === data.length){ %>    
+                                                        <img src="../assets/img/descenso.png" width="80" alt="logo">
+
                                                     <% }else{ %>
                                                         <%= varPosicion %>    
                                                     <% } %>    
@@ -113,7 +116,7 @@
                                                 <td class="textoGrupo">
                                                     <%= data[i].nombre %>
                                                 </td>
-                                                <td class="textoGrupo">
+                                                <td class="textoMarcador">
                                                     <%= data[i].total %>
                                                 </td>
                                             </tr>

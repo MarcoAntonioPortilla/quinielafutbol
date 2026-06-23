@@ -140,7 +140,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 .textoPuntos {
     text-align: center;
-    font-size: 70px; /*30*/
+    font-size: 50px; /*30*/
     font-weight: bold;
     font-style: italic;
 }
